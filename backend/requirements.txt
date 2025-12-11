@@ -6,6 +6,7 @@ PyJWT==2.8.0
 python-dotenv==1.0.0
 twilio==8.13.0
 gunicorn==21.2.0
+serverless-wsgi==0.8.2
 
 
 
