@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo-Check - Safety Monitoring</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- State A: Not Logged In -->
+    <div id="auth-screen" class="screen">
+        <div class="auth-container">
+            <div class="logo">
+                <h1>🛡️ Echo-Check</h1>
+                <p>Stay Safe, Stay Connected</p>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="login">Login</button>
+                <button class="tab-btn" data-tab="signup">Sign Up</button>
+            </div>
+
+            <div id="login-form" class="auth-form active">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button onclick="handleLogin()" class="btn btn-primary">Login</button>
+                <div id="login-error" class="error-message"></div>
+            </div>
+
+            <div id="signup-form" class="auth-form">
+                <input type="text" id="signup-name" placeholder="Name" required>
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <input type="password" id="signup-password" placeholder="Password" required>
+                <button onclick="handleSignup()" class="btn btn-primary">Sign Up</button>
+                <div id="signup-error" class="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- State B & C: Logged In -->
+    <div id="main-screen" class="screen hidden">
+        <header class="header">
+            <h1>🛡️ Echo-Check</h1>
+            <div class="user-info">
+                <span id="user-name"></span>
+                <button onclick="handleLogout()" class="btn btn-small">Logout</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- State B: No Active Trip -->
+            <div id="no-trip-view" class="view">
+                <div class="card">
+                    <h2>Start a New Trip</h2>
+                    <form id="trip-form" onsubmit="handleStartTrip(event)">
+                        <input type="text" id="trip-destination" placeholder="Destination" required>
+                        <label>
+                            Check-in Interval (minutes):
+                            <input type="number" id="trip-interval" value="10" min="5" max="120" required>
+                        </label>
+                        <button type="submit" class="btn btn-primary">Start Trip</button>
+                    </form>
+                    <div id="trip-error" class="error-message"></div>
+                </div>
+            </div>
+
+            <!-- State C: Active Trip -->
+            <div id="active-trip-view" class="view hidden">
+                <div class="card trip-card">
+                    <h2>Active Trip</h2>
+                    <div class="trip-info">
+                        <p><strong>Destination:</strong> <span id="trip-destination-display"></span></p>
+                        <p><strong>Next Check-in Due:</strong> <span id="next-check-due"></span></p>
+                        <div class="countdown-container">
+                            <p class="countdown-label">Time Remaining:</p>
+                            <div id="countdown" class="countdown">--:--</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trip-actions">
+                        <button onclick="handleCheckin()" class="btn btn-success btn-large">
+                            ✓ I'm Safe — Check-in
+                        </button>
+                        <button onclick="handleSOS()" class="btn btn-danger btn-large">
+                            🚨 EMERGENCY SOS
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trusted Contacts Section -->
+            <div class="card">
+                <h2>Trusted Contacts</h2>
+                <form id="contact-form" onsubmit="handleAddContact(event)">
+                    <div class="form-row">
+                        <input type="text" id="contact-name" placeholder="Name" required>
+                        <input type="tel" id="contact-phone" placeholder="Phone" required>
+                        <input type="email" id="contact-email" placeholder="Email (optional)">
+                        <button type="submit" class="btn btn-primary">Add Contact</button>
+                    </div>
+                </form>
+                <div id="contacts-list" class="contacts-list"></div>
+                <div id="contact-error" class="error-message"></div>
+            </div>
+
+            <!-- Quick Tools -->
+            <div class="card">
+                <h2>Quick Tools</h2>
+                <button onclick="handleScanMissedChecks()" class="btn btn-secondary">
+                    Scan for Missed Check-ins
+                </button>
+                <div id="missed-checks-result" class="missed-checks-result"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SOS Modal -->
+    <div id="sos-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>🚨 Emergency SOS Activated</h2>
+            <p>Your emergency alert has been sent. Contact links:</p>
+            <div id="sos-links" class="sos-links"></div>
+            <button onclick="closeSOSModal()" class="btn btn-primary">Close</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

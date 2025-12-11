@@ -1,0 +1,5 @@
+- [x] Add Twilio SDK to requirements.txt for SMS and WhatsApp functionality
+- [x] Update env.example.txt with Twilio configuration variables
+- [x] Modify backend/app.py SOS endpoint to send SMS and WhatsApp messages to contacts using Twilio
+- [x] Handle sending results and update response data accordingly
+- [ ] Test the SOS functionality after adding contacts
