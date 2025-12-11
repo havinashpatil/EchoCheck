@@ -1,0 +1,9 @@
+routes:
+  - path: /
+    methods:
+      - GET
+    file: index.html
+  - path: /*
+    methods:
+      - GET
+    file: index.html
