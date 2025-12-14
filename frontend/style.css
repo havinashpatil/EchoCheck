@@ -393,6 +393,36 @@ body {
     margin-bottom: 20px;
 }
 
+.phone-input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+.phone-prefix {
+    padding: 12px 15px;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-right: 1px solid var(--border);
+}
+
+.phone-input-group input {
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 12px 15px;
+    flex: 1;
+    outline: none;
+}
+
+.phone-input-group input:focus {
+    background: var(--bg-hover);
+}
+
 .contacts-list {
     margin-top: 20px;
 }

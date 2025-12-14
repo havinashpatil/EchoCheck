@@ -654,6 +654,9 @@ async function handleAddContact(event) {
         return;
     }
 
+    // Prepend +91 to the phone number
+    const fullPhone = '+91' + phone;
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email && !emailRegex.test(email)) {
         errorDiv.textContent = 'Invalid email: Please enter a valid email address.';
@@ -667,7 +670,7 @@ async function handleAddContact(event) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
             },
-            body: JSON.stringify({ name, phone, email })
+            body: JSON.stringify({ name, phone: fullPhone, email })
         });
 
         const data = await response.json();

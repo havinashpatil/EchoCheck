@@ -100,7 +100,10 @@
                 <form id="contact-form" onsubmit="handleAddContact(event)">
                     <div class="form-row">
                         <input type="text" id="contact-name" placeholder="Name" required>
-                        <input type="tel" id="contact-phone" placeholder="Phone" required>
+                        <div class="phone-input-group">
+                            <span class="phone-prefix">+91</span>
+                            <input type="tel" id="contact-phone" placeholder="XXXXXXXXXX" maxlength="10" pattern="\d{10}" required>
+                        </div>
                         <input type="email" id="contact-email" placeholder="Email (optional)">
                         <button type="submit" class="btn btn-primary">Add Contact</button>
                     </div>
