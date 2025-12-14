@@ -100,12 +100,14 @@ def is_valid_email(email: str) -> bool:
 
 
 def is_valid_phone(phone: str) -> bool:
-    """Return True when phone consists of exactly 10 digits."""
+    """Return True when phone consists of exactly 10 digits, optionally prefixed with +91."""
     if phone is None:
         return False
     # Convert to string and strip whitespace
     phone_str = str(phone).strip()
-    return bool(re.fullmatch(r"\d{10}", phone_str))
+    # Allow +91 followed by optional space and 10 digits, or just 10 digits
+    pattern = r"(\+91\s?)?\d{10}"
+    return bool(re.fullmatch(pattern, phone_str))
 
 # ==================== AUTHENTICATION ====================
 
@@ -234,7 +236,7 @@ def add_contact(user_id):
         if not is_valid_name(name):
             return jsonify({'error': 'Invalid contact name. Use letters and spaces only.'}), 400
         if not is_valid_phone(phone):
-            return jsonify({'error': 'Invalid phone number. Must be exactly 10 digits.'}), 400
+            return jsonify({'error': 'Invalid phone number. Must be 10 digits or +91 followed by 10 digits.'}), 400
         if email and not is_valid_email(email):
             return jsonify({'error': 'Invalid email format for contact'}), 400
         
@@ -559,14 +561,16 @@ def health():
 # Serve frontend static files
 @app.route('/', methods=['GET'])
 def serve_index():
-    return send_from_directory('../frontend', 'index.html')
+    frontend_dir = os.path.join(os.path.dirname(__file__), '..', 'frontend')
+    return send_from_directory(frontend_dir, 'index.html')
 
 @app.route('/<path:path>', methods=['GET'])
 def serve_static(path):
     # Serve static files from frontend directory
     if path.startswith('api/'):
         return jsonify({'error': 'Not found'}), 404
-    return send_from_directory('../frontend', path)
+    frontend_dir = os.path.join(os.path.dirname(__file__), '..', 'frontend')
+    return send_from_directory(frontend_dir, path)
 
 if __name__ == '__main__':
     # Disable reloader on Windows to avoid socket errors
