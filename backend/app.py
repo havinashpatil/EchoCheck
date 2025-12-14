@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson import ObjectId
@@ -555,6 +555,18 @@ def scan_missed_checks(user_id):
 @app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({'status': 'ok'}), 200
+
+# Serve frontend static files
+@app.route('/', methods=['GET'])
+def serve_index():
+    return send_from_directory('../frontend', 'index.html')
+
+@app.route('/<path:path>', methods=['GET'])
+def serve_static(path):
+    # Serve static files from frontend directory
+    if path.startswith('api/'):
+        return jsonify({'error': 'Not found'}), 404
+    return send_from_directory('../frontend', path)
 
 if __name__ == '__main__':
     # Disable reloader on Windows to avoid socket errors
